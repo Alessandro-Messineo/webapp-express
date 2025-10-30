@@ -16,8 +16,33 @@ function index(req, res) {
 }
 
 function show(req, res) {
-    console.log("index");
-    res.send("show")
+    // recuperiamo id dall'URL
+    const id = req.params.id;
+
+    // query per il film
+    const movieSql = 'SELECT * FROM movies WHERE id = ?';
+
+    // la query per le recensioni
+    const reviewSql = 'SELECT * FROM reviews WHERE movie_id = ?';
+
+    // Eseguiamo la prima query
+    connection.query(movieSql, [id], (err, movieResult) => {
+        if (err) return res.status(500).json({ error: "Database error" })
+        if (movieResult.length === 0) return res.status(404).json({ error: "Movie not found" })
+
+        // Recuperiamo il film
+        const movies = movieResult[0];
+
+        // eseguiamo la seconda query 
+        connection.query(reviewSql, [id], (err, reviewResult) => {
+            if (err) return res.status(500).json({ error: "Database error" })
+
+            movies.reviews = reviewResult;
+            res.json(movies);
+        });
+
+
+    });
 }
 
 // esporto tutto
