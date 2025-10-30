@@ -5,17 +5,17 @@ const app = express();
 // numero della porta da utilizzare
 const port = 3001;
 
+// importiamo modulo router 
+const movieRouter = require("./routers/movieRouter")
 
 // rotta di default
-app.get("/", (req, res) => {
-    res.send(`<h1> Pagina dei film </h1>`)
+app.get("/api", (req, res) => {
+    res.send(`<h1> Pagina della home </h1>`)
 })
 
 
-// rotta dei post
-app.use("/api/movies", (req, res) => {
-    res.send(`<h1> Pagina dei film </h1>`)
-});
+// rotta dei film
+app.use("/api/movies", movieRouter);
 
 
 app.listen(port, () => {

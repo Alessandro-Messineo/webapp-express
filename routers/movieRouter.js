@@ -4,11 +4,15 @@ const express = require("express");
 // settiamo il router
 const router = express.Router();
 
+// importo il controller
+const movieController = require('../controllers/movieController');
+
+
 // index
-router.get('/', );
+router.get('/', movieController.index);
 
 // show
-router.get('/:id', );
+router.get('/:id', movieController.show);
 
 // esporto router
 module.exports = router;
