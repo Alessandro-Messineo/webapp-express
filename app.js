@@ -12,21 +12,27 @@ const movieRouter = require("./routers/movieRouter")
 const notFound = require("./middlewares/notFound")
 // importo il middleware per gli errori nelle pagine
 const errors = require("./middlewares/error")
+// rendo disponibili i file statici
+app.use(express.static('public'));
+
+
 
 // rotta di default
 app.get("/api", (req, res) => {
     res.send(`<h1> Pagina della home </h1>`)
 })
 
-
 // rotta dei film
 app.use("/api/movies", movieRouter);
+
+
 
 // richiamo il middleware per le pagine non trovate
 app.use(notFound);
 
 // richiamo il middleware per gli errori nelle pagine
 app.use(errors);
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
